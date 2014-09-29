@@ -1,0 +1,204 @@
+<html>
+ <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+		<script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/bloodtest.js"></script>
+   </head>
+   <div id="exit-overlay" class="overlay">
+        <div class="overlay-box">
+			<h4>What would you like to do now?</h4>
+			<button class="close-button" onclick="$('#exit-overlay').fadeOut(100)">X</button>
+			<button onclick="alert('Not yet implemented')">Save these results</button>
+			<p style="text-align:center">Save your results on your computer</p>
+			<button onclick="alert('Not yet implemented')">Print these results</button>
+			<p style="text-align:center">Allows you to print a printer-friendly version of your old & new results</p>
+			<button onclick="alert('Not yet implemented')">Go to action plan</button>
+			<p style="text-align:center">Shows a summary of the behavorial changes you've selected and how to adopt them</p>
+		</div>
+   </div>
+   <div id="resource-overlay" class="overlay">
+        <div class="overlay-box" id="resource-box">
+			<h4>Healthy Behaviors Resource Center</h4>
+			<button class="close-button" onclick="$('#resource-overlay').fadeOut(100)">X</button>
+			<h5>Exercise</h5>
+			<input type="checkbox" id="res1" checked>
+			<label for="res1">take a walk during lunch</label>
+			<p><b>Why:</b> The American Heart Association recommends 150 minutes of moderate aerobic activity each week to prevent heart disease. You can walk 30 minutes each day during your lunch break and reach this goal. Learn more at <a href="http://heart.org/activityrecommendations" target="_blank">heart.org/activityrecommendations</a>.</p>
+			<p><b>How:</b> Find a walking path and keep a log of your activity at <a href="http://www.startwalkingnow.org">www.startwalkingnow.org</a>.</p>
+			
+			<input type="checkbox" id="res2">
+			<label for="res2">lift weights during commercials</label>
+			<p><b>Why:</b> The American Heart Association recommends moderate muscle-strengthening twice a week. You can lift weights during the commercials of your two favorite programs and reach this goal. Learn more at <a href="http://heart.org/activityrecommendations" target="_blank">heart.org/activityrecommendations</a> and <a href="http://www.medicalnewstoday.com/articles/77017.php" target="_blank">www.medicalnewstoday.com/articles/77017.php</a>.</p>
+			<p><b>How:</b> Start with a basic, equipment-free workout at <a href="http://www.sparkpeople.com" target="_blank">www.sparkpeople.com</a>.</p>
+ 
+			<input type="checkbox" id="res3">
+			<label for="res3">bike to work</label>
+			<p><b>Why:</b> Biking to work not only count as moderate aerobic activity, but it also saves on transit, parking, and gas expenses. A recent study by the British Medical Association shows that biking 20 miles a week can reduce heart disease risk by 50% over a lifetime. Read more at <a href="http://www.medicalnewstoday.com/articles/225940.php" target="_blank">www.medicalnewstoday.com/articles/225940.php</a>.</p>
+			<p><b>How:</b> Plan your route and check your safety gear with a beginner's biking guide at <a href="http://www.biketoworkinfo.org/resources/rsc_guide-beginner.cfm" target="_blank">www.biketoworkinfo.org/resources/rsc_guide-beginner.cfm</a>.</p>
+			
+			<input type="checkbox" id="res4">
+			<label for="res4">use a standing desk</label>
+			<p>...</p>
+		</div>
+	</div>
+    <div id="onboarding-overlay" class="overlay" onclick="$('#onboarding-overlay').fadeOut(100);$('body').css('overflow', 'auto');">
+		<div id="onb-exit-text">
+			Click anywhere to close.
+		</div>
+        <div id="onb-risk" class="onboarding-box">
+			Your risk, based on your test results, is shown here.
+		</div>
+		<div id="onb-graphs" class="onboarding-box">
+			These displays show how your results compare to the general population and where you want to be.
+		</div>
+		<div id="onb-level" class="onboarding-box">
+			You can change the level of detail in the explanations using this menu.
+		</div>
+		<div id="onb-toolbox" class="onboarding-box">
+			Use this toolbox to select behaviors you can adopt to improve your results. We'll show you the effects of these changes.
+		</div>
+		<div class="onboarding-box" id="onb-explain">
+			These text boxes explain what each test value is.
+		</div>
+		<div class="onboarding-box" id="onb-suggest">
+			These text boxes give suggestions of behaviors you can use to improve each result.
+		</div>
+   </div>
+<div id="top-toolbar">
+	<div id="top-inner">
+<span id="risk-toolbar"><span id="risk">25%</span> risk of cardiovascular disease in the next 10 years</span>
+<span id="detail-level-toolbar">
+Detail level:
+<select onChange="changeSuggestions(this.value)">
+  <option value="basic" selected="selected">Basic</option>
+  <option value="intermediate">Intermediate</option>
+  <option value="expert">Expert</option></select></span>
+
+<span id="done-button" onclick="showOverlay('done-button')"><strong>I'm Done</strong></span>
+	</div>
+</div>
+<body>
+<div id="analysis-div">
+<h3>Your Blood Test Results</h3>
+	<div id="cholesterol">
+		<div class="graphs">
+			<h4>Cholesterol</h4>
+			<img src="img/cholesterol.png" id="chol-graphs" />
+			<!--Total: 211 mg/dL<br />
+			LDL: 165 mg/dL<br />
+			HDL: 46 mg/dL<br />
+			Triglycerides: 160 mg/dL-->
+		</div>
+		<div class="infoboxes">
+			<h4>What This Means</h4>
+			<div class="definition-box" id="chol-def">It is ideal to have cholesterol in the lower (green) range.<br /><br />
+				It is beneficial to have low HDL ("good" cholesterol) level.<br /><br />
+				High LDL ("bad" cholesterol) levels can be a potential health hazard.</div>
+			<h4>Suggestions</h4>
+			<div class="suggestion-box" id="chol-sug">
+				You can <em>reduce</em> your LDL by:<br />
+				<img src="img/leaf2.png" /> substituting olive oil for butter<br />
+				<img src="img/man2.png" /> taking a walk during lunch<br />
+				<img src="img/leaf2.png" /> eat fish 2x per week<br /><br />
+
+				You can <em>raise</em> your HDL by:<br />
+				<img src="img/cross2.png" /> quitting smoking<br />
+				<img src="img/leaf2.png" /> eating more fiber
+			</div>
+		</div>
+	</div>
+	<div id="bloodcount">
+		<div class="graphs">
+			<h4>Complete Blood Count</h4>
+			<img src="img/bloodcount.png" />
+		</div>
+		<div class="infoboxes">
+			<h4>What This Means</h4>
+			<div class="definition-box" id="bc-def">Red blood cells help deliver oxygen to the body. It is ideal to have a count within the green range.<br /><br />
+				White blood cells protect the body against infection. It is ideal to have a count within the green range.
+			</div>
+			<h4>Suggestions</h4>
+			<div class="suggestion-box" id="bc-sug">
+				You can <em>raise</em> your RBC count by:<br />
+				<img src="img/leaf2.png" /> eat leafy greens 3x per week<br />
+				<img src="img/man2.png" /> taking a walk during lunch<br /><br />
+
+				You can <em>raise</em> your platelet count by:<br />
+				<img src="img/cross2.png" /> taking vitamin supplements
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="behavorial-div">
+<p><strong>Behavorial Toolbox</strong></p>
+	<div id="behav-nothing">
+		No behaviors selected
+		<button id="add-behavior" onclick="openOptions()">Add Behaviors>></button>
+	</div>
+	<div id="behav-options" style="display: none;">
+		Check off activities to start doing.<br />If you already do it, click the X instead.<br /><br />
+		<b>Exercise</b><img src="img/man.png" class="category" /><br>
+		<div class="select-row" id="row1">
+			<input type="checkbox" id="opt1" name="opt1" value="lunch-walk">&nbsp;<span class="X" id="X1" onclick="currentBehavior(1)">X</span>
+			<label for="opt1">take a walk during lunch</label>
+		</div>
+		<div class="select-row" id="row2">
+			<input type="checkbox" id="opt2" name="opt2" value="lift-weights">&nbsp;<span class="X" id="X2" onclick="currentBehavior(2)">X</span>
+			<label for="opt2">lift weights every night</label>
+		</div>
+
+		<div class="select-row" id="row3">
+			<input type="checkbox" id="opt3" name="opt3" value="bike-work">&nbsp;<span class="X" id="X3" onclick="currentBehavior(3)">X</span>
+			<label for="opt3">bike to work</label>
+		</div>
+
+		<b>Diet</b><img src="img/leaf.png" class="category" /><br>
+		<div class="select-row" id="row4">
+			<input type="checkbox" id="opt4" name="opt4" value="olive-butter">&nbsp;<span class="X" id="X4" onclick="currentBehavior(4)">X</span>
+			<label for="opt4">substitute olive oil for butter</label>
+		</div>
+		<div class="select-row" id="row5">
+			<input type="checkbox" id="opt5"name="opt5" value="fish">&nbsp;<span class="X" id="X5" onclick="currentBehavior(5)">X</span>
+			<label for="opt5">eat fish 2x per week</label>
+		</div>
+		<div class="select-row" id="row6">
+			<input type="checkbox" id="opt6" name="opt6" value="greens">&nbsp;<span class="X" id="X6" onclick="currentBehavior(6)">X</span>
+			<label for="opt6">eat leafy greens 3x per week</label>
+		</div>
+		<b>Other</b><img src="img/cross.png" class="category" /><br>
+		<div class="select-row" id="row7">
+			<input type="checkbox" id="opt7" name="opt7" value="smoking">&nbsp;<span class="X" id="X7" onclick="currentBehavior(7)">X</span>
+			<label for="opt7">quit smoking</label>
+		</div><br />
+		<div id="behavior-butns-div">
+			<button onclick="showOverlay('resource-button')">Resources</button>
+			<button onclick="clearAllChecks()">Clear</button>
+			<button onclick="applyBehaviors()">Apply</button>
+		</div>
+	</div>
+	<div id="behav-selected" style="display: none;">
+		<img src="img/man.png" /> take a walk during lunch<br />
+		<img src="img/man.png" /> lift weights during commercials<br />
+		<img src="img/man.png" /> bike to work<br />
+		<img src="img/man.png" /> use a standing desk
+		<button id="add-behavior" onclick="openOptions()">Add Behaviors>></button>
+	</div>
+</div>
+
+</body>
+
+</html>
